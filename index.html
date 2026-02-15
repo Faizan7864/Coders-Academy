@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coders Academy</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body class="h-full">
+    <div id="app" class="h-full overflow-auto">
+
+      <!-- Toast Container -->
+      <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+      <!-- Navigation -->
+      <nav class="fixed top-0 left-0 right-0 z-40 glass-card border-0 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              </div>
+              <span id="nav-academy-name" class="font-display font-bold text-xl gradient-text">Coders Academy</span>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8">
+              <button onclick="navigateTo('home')" class="nav-link text-white/80 hover:text-white transition">Home</button>
+              <button onclick="navigateTo('courses')" class="nav-link text-white/80 hover:text-white transition">Courses</button>
+              <button onclick="navigateTo('dashboard')" class="nav-link text-white/80 hover:text-white transition">Dashboard</button>
+            </div>
+
+            <div id="auth-buttons" class="flex items-center gap-3">
+              <button onclick="showAuthModal('login')" class="px-4 py-2 text-white/80 hover:text-white transition">Login</button>
+              <button onclick="showAuthModal('signup')" class="glow-btn px-5 py-2 rounded-full text-white font-medium">Sign Up</button>
+            </div>
+
+            <div id="user-menu" class="hidden items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center">
+                <span id="user-avatar" class="text-white font-bold">U</span>
+              </div>
+              <span id="user-name" class="text-white font-medium"></span>
+              <button onclick="logout()" class="text-white/60 hover:text-white transition ml-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main id="main-content" class="pt-20">
+
+        <!-- ==================== HOME PAGE ==================== -->
+        <div id="page-home" class="page">
+
+          <!-- Hero Section -->
+          <section class="hero-bg relative min-h-screen flex items-center overflow-hidden">
+            <div class="absolute inset-0 grid-pattern"></div>
+            <div id="particles" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+
+            <!-- 3D Cube -->
+            <div class="absolute right-10 top-1/4 floating-3d opacity-30">
+              <div class="cube-container">
+                <div class="cube w-24 h-24 relative">
+                  <div class="cube-face" style="transform: translateZ(50px)"></div>
+                  <div class="cube-face" style="transform: rotateY(180deg) translateZ(50px)"></div>
+                  <div class="cube-face" style="transform: rotateY(90deg) translateZ(50px)"></div>
+                  <div class="cube-face" style="transform: rotateY(-90deg) translateZ(50px)"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Morphing Shape -->
+            <div class="absolute left-10 bottom-1/4 w-64 h-64 morph-shape bg-gradient-to-br from-indigo-500/10 to-cyan-500/10 blur-3xl"></div>
+
+            <div class="max-w-7xl mx-auto px-6 py-20 relative z-10">
+              <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                  <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    <span class="text-sm text-white/70">New courses added weekly</span>
+                  </div>
+
+                  <h1 id="hero-title" class="font-display text-5xl md:text-7xl font-bold leading-tight">
+                    Master the Art of <span class="gradient-text">Coding</span>
+                  </h1>
+
+                  <p id="hero-subtitle" class="text-xl text-white/60 max-w-lg">
+                    Join thousands of developers learning to build the future. Interactive courses, real projects, and expert mentorship.
+                  </p>
+
+                  <div class="flex flex-wrap gap-4">
+                    <button onclick="navigateTo('courses')" class="glow-btn px-8 py-4 rounded-full text-white font-semibold text-lg">
+                      Explore Courses
+                    </button>
+                    <button onclick="showAuthModal('signup')" class="px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-lg hover:bg-white/5 transition">
+                      Start Free Trial
+                    </button>
+                  </div>
+
+                  <!-- Stats -->
+                  <div class="flex flex-wrap gap-8 pt-8">
+                    <div class="text-center">
+                      <div class="stat-number font-display text-4xl font-bold gradient-text">50K+</div>
+                      <div class="text-white/50 text-sm">Students</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="stat-number font-display text-4xl font-bold gradient-text">200+</div>
+                      <div class="text-white/50 text-sm">Courses</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="stat-number font-display text-4xl font-bold gradient-text">95%</div>
+                      <div class="text-white/50 text-sm">Success Rate</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Code Editor Mockup -->
+                <div class="relative floating-3d" style="animation-delay: -3s;">
+                  <div class="glass-card rounded-2xl p-6 transform perspective-1000 rotate-y-6">
+                    <div class="flex items-center gap-2 mb-4">
+                      <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                      <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                      <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                      <span class="text-white/40 text-sm ml-4">main.py</span>
+                    </div>
+                    <pre class="text-sm font-mono"><span class="text-purple-400">class</span> <span class="text-cyan-400">Developer</span>:
+    <span class="text-purple-400">def</span> <span class="text-yellow-400">__init__</span>(<span class="text-orange-400">self</span>):
+        <span class="text-orange-400">self</span>.skills = []
+        <span class="text-orange-400">self</span>.passion = <span class="text-green-400">True</span>
+    
+    <span class="text-purple-400">def</span> <span class="text-yellow-400">learn</span>(<span class="text-orange-400">self</span>, skill):
+        <span class="text-orange-400">self</span>.skills.append(skill)
+        <span class="text-purple-400">return</span> <span class="text-green-400">"🚀 Level Up!"</span>
+
+<span class="text-gray-500"># Start your journey</span>
+you = <span class="text-cyan-400">Developer</span>()
+you.learn(<span class="text-green-400">"Python"</span>)<span class="typing-text"></span></pre>
+                  </div>
+                  <div class="absolute -right-4 top-1/4 glass-card px-4 py-2 rounded-full animate-bounce">
+                    <span class="text-2xl">🎯</span>
+                    <span class="text-white/80 text-sm ml-2">Project Based</span>
+                  </div>
+                  <div class="absolute -left-4 bottom-1/4 glass-card px-4 py-2 rounded-full animate-bounce" style="animation-delay: 0.5s;">
+                    <span class="text-2xl">🏆</span>
+                    <span class="text-white/80 text-sm ml-2">Certified</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator">
+              <svg class="w-6 h-10 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 40">
+                <rect x="1" y="1" width="22" height="38" rx="11" stroke-width="2" />
+                <circle cx="12" cy="12" r="3" fill="currentColor" class="animate-bounce" />
+              </svg>
+            </div>
+          </section>
+
+          <!-- Features Section -->
+          <section class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-6">
+              <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">
+                  Why Choose <span class="gradient-text">Coders Academy</span>?
+                </h2>
+                <p class="text-white/50 text-lg max-w-2xl mx-auto">
+                  Experience the future of learning with our innovative platform
+                </p>
+              </div>
+              <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card rounded-2xl p-8 text-center group">
+                  <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center group-hover:scale-110 transition">
+                    <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                  </div>
+                  <h3 class="font-display text-xl font-bold mb-3">Interactive Learning</h3>
+                  <p class="text-white/50">Code in real-time with instant feedback and AI-powered assistance</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 text-center group">
+                  <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center group-hover:scale-110 transition">
+                    <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                  </div>
+                  <h3 class="font-display text-xl font-bold mb-3">Real Projects</h3>
+                  <p class="text-white/50">Build portfolio-worthy projects that showcase your skills</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 text-center group">
+                  <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center group-hover:scale-110 transition">
+                    <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  </div>
+                  <h3 class="font-display text-xl font-bold mb-3">Expert Mentors</h3>
+                  <p class="text-white/50">Learn from industry professionals with years of experience</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- CTA Section -->
+          <section class="py-24 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-cyan-500/10"></div>
+            <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+              <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Ready to Start Your Journey?</h2>
+              <p class="text-white/50 text-lg mb-8">Join our community of learners and transform your career today</p>
+              <button onclick="showAuthModal('signup')" class="glow-btn px-10 py-5 rounded-full text-white font-bold text-xl">
+                Get Started Free →
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <!-- ==================== COURSES PAGE ==================== -->
+        <div id="page-courses" class="page hidden">
+          <section class="py-12">
+            <div class="max-w-7xl mx-auto px-6">
+              <div class="text-center mb-12">
+                <h1 class="font-display text-4xl md:text-5xl font-bold mb-4">Our <span class="gradient-text">Courses</span></h1>
+                <p class="text-white/50 text-lg">Master the most in-demand skills</p>
+              </div>
+
+              <!-- Category Filters -->
+              <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filterCourses('all')" class="filter-btn active px-6 py-2 rounded-full glass-card text-white/80 hover:text-white transition" data-filter="all">All</button>
+                <button onclick="filterCourses('web')" class="filter-btn px-6 py-2 rounded-full glass-card text-white/80 hover:text-white transition" data-filter="web">Web Dev</button>
+                <button onclick="filterCourses('mobile')" class="filter-btn px-6 py-2 rounded-full glass-card text-white/80 hover:text-white transition" data-filter="mobile">Mobile</button>
+                <button onclick="filterCourses('data')" class="filter-btn px-6 py-2 rounded-full glass-card text-white/80 hover:text-white transition" data-filter="data">Data Science</button>
+                <button onclick="filterCourses('ai')" class="filter-btn px-6 py-2 rounded-full glass-card text-white/80 hover:text-white transition" data-filter="ai">AI/ML</button>
+              </div>
+
+              <!-- Course Grid -->
+              <div id="course-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ==================== DASHBOARD PAGE ==================== -->
+        <div id="page-dashboard" class="page hidden">
+          <section class="py-12">
+            <div class="max-w-7xl mx-auto px-6">
+              <div class="mb-12">
+                <h1 class="font-display text-4xl font-bold mb-2">
+                  Welcome back, <span id="dashboard-username" class="gradient-text">Student</span>!
+                </h1>
+                <p class="text-white/50">Continue your learning journey</p>
+              </div>
+
+              <!-- Progress Overview -->
+              <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <div class="glass-card rounded-2xl p-6">
+                  <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center">
+                      <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div id="enrolled-count" class="font-display text-3xl font-bold">0</div>
+                      <div class="text-white/50 text-sm">Enrolled Courses</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6">
+                  <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+                      <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div id="completed-count" class="font-display text-3xl font-bold">0</div>
+                      <div class="text-white/50 text-sm">Completed</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6">
+                  <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center">
+                      <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div id="overall-progress" class="font-display text-3xl font-bold">0%</div>
+                      <div class="text-white/50 text-sm">Overall Progress</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h2 class="font-display text-2xl font-bold mb-6">My Courses</h2>
+              <div id="enrolled-courses" class="space-y-6">
+                <div class="glass-card rounded-2xl p-8 text-center">
+                  <p class="text-white/50">You haven't enrolled in any courses yet.</p>
+                  <button onclick="navigateTo('courses')" class="glow-btn px-6 py-3 rounded-full text-white font-medium mt-4">
+                    Browse Courses
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ==================== COURSE DETAIL PAGE ==================== -->
+        <div id="page-course-detail" class="page hidden">
+          <section class="py-12">
+            <div class="max-w-5xl mx-auto px-6">
+              <button onclick="navigateTo('courses')" class="flex items-center gap-2 text-white/60 hover:text-white transition mb-8">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Courses
+              </button>
+              <div id="course-detail-content"></div>
+            </div>
+          </section>
+        </div>
+
+      </main>
+
+      <!-- ==================== AUTH MODAL ==================== -->
+      <div id="auth-modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeAuthModal()"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md">
+          <div class="glass-card rounded-3xl p-8 m-4">
+            <div class="text-center mb-8">
+              <h2 id="auth-title" class="font-display text-2xl font-bold">Welcome Back</h2>
+              <p id="auth-subtitle" class="text-white/50 mt-2">Sign in to continue your journey</p>
+            </div>
+            <form id="auth-form" onsubmit="handleAuth(event)" class="space-y-6">
+              <div id="signup-name-field" class="hidden">
+                <label for="auth-name" class="block text-white/70 text-sm mb-2">Full Name</label>
+                <input type="text" id="auth-name"
+                  class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-indigo-500 transition"
+                  placeholder="John Doe" />
+              </div>
+              <div>
+                <label for="auth-email" class="block text-white/70 text-sm mb-2">Email</label>
+                <input type="email" id="auth-email"
+                  class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-indigo-500 transition"
+                  placeholder="you@example.com" required />
+              </div>
+              <div>
+                <label for="auth-password" class="block text-white/70 text-sm mb-2">Password</label>
+                <input type="password" id="auth-password"
+                  class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-indigo-500 transition"
+                  placeholder="••••••••" required />
+              </div>
+              <button type="submit" id="auth-submit-btn" class="w-full glow-btn py-4 rounded-xl text-white font-semibold">
+                Sign In
+              </button>
+            </form>
+            <div class="text-center mt-6">
+              <button id="auth-switch" onclick="switchAuthMode()" class="text-white/50 hover:text-white transition">
+                Don't have an account? <span class="text-indigo-400">Sign up</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="glass-card border-0 border-t border-white/10 py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+          <p class="text-white/40">© 2024 Coders Academy. All rights reserved.</p>
+        </div>
+      </footer>
+
+    </div><!-- /#app -->
+
+    <!-- JavaScript Files -->
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/courses.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
